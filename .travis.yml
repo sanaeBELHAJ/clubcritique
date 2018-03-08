@@ -11,3 +11,4 @@ script:
     
 notifications:
     slack: esgienv:P41xWxouoCKCqrJVOsVtfCNR
+    email: sanai-son112@hotmail.fr
