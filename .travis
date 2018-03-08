@@ -1,0 +1,14 @@
+language: php
+php:
+  - 7.1.9
+  
+before_script:
+ - composer require --dev friendsofphp/php-cs-fixer
+ - composer require --dev sensiolabs/security-checker
+ 
+
+notifications:
+    slack:
+      esgienv:P41xWxouoCKCqrJVOsVtfCNR
+	email:
+      - sanai-son112@hotmail.fr
