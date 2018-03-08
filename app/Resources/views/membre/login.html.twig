@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <div class="row top">
+        <div  class="col s4 center">
+        </div>
+        <div  class="col s4 center">
+            <div class="card">
+                <div class="card-content">
+                    <p><b><center>Se connecter à votre compte</center></b></p>
+                       <hr>
+                       {{ form_start(form) }}
+                            {{ form_rest(form) }}
+                                <div class="col s6 "><a class="waves-effect waves-teal red-text text-lighten-2" href="{{path('homepage')}}">Créer un compte</a></div>
+                                <div class="col s6 right "><button class="waves-effect waves-light btn" type="submit">Connexion</button></div>
+                        {{ form_end(form) }}
+                        <br>
+                        
+                        <br>
+                </div>
+            </div>
+        </div>
+        <div  class="col s4 center">
+        </div> 
+    </div>
+    
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+{% endblock %}
+    

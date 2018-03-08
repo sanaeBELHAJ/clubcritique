@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Nouvelle categorie
+{% endblock %}
+
+
+{% block body %}
+    <div class="row">
+          <nav>
+            <div class="nav-wrapper brown lighten-3">
+               <div class="container">
+                    <div class="col s12">
+                      <a href="/Administration" class="breadcrumb">Administration</a>
+                      <a href="/categorieList" class="breadcrumb">Categorie</a>
+                      <a href="/newCategorie" class="breadcrumb">Nouvelle categorie</a>
+                    </div>
+               </div>
+            </div>
+          </nav>
+        <div class="col l12 col m12 col s12 col xs12  margin-top">
+            <div class="container">
+                <h5><center>Ajouter une nouvelle categorie</center></h5>
+                <fieldset>
+                    {{ form_start(form) }}
+                        {{ form_rest(form) }}
+                        <div class="right">
+                             <button class="btn waves-effect waves-light" type="submit" name="action">Valider
+                                <i class="material-icons right">send</i>
+                              </button>
+                        </div>
+                    {{ form_end(form) }}
+                </fieldset>
+            </div>
+        </div>
+    </div>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+{% endblock %}

@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+  
+    
+    <div class="container">
+                    
+            
+        <div class="row top">    
+            <div class="col s8">
+                <p> Répondre à {{inviters|length}} invitation(s)</p>
+            </div>
+            <div class="col s4 right">
+                <form>
+                     <div class="input-field col s12">
+                        <i class="material-icons prefix">search</i>
+                        <input type="text" id="autocomplete-input" class="autocomplete">
+                        <label for="autocomplete-input">Chercher un utilisateur</label>
+                      </div>
+                </form>
+            </div>
+        </div>
+               <div class="row">
+            <div class="card">
+                {% if inviters|length == 0 %}
+                    <p>Vous n'avez aucune demande d'amitie pour l'instant.</p>
+                {%endif%}
+                {% for m in inviters %}
+                 <div class="card-content">
+                     <table>
+                         <tr>
+                             <td class="col s3">
+                                 <a href="{{ path("membre_profil", {'id': m.id})}}">
+                                    {% if m.picture != null %}
+                                        <div><img width="50" class="centerer" src="../ressource/profil/{{m.picture}}" alt="photo de profil"></div>
+                                    {% else %}
+                                        <div><img width="50" class="centerer" src="../ressource/profil/profil.png" alt="default"></div>
+                                    {% endif %}
+                                </a>
+                             </td>
+                             <td> <a href="{{ path("membre_profil", {'id': m.id})}}" class="marg-left padd-left black-text left-align"><b>{{ m.prenom|upper }} {{m.nom|upper}}</b></a></td>
+                             <td width="5"> <a href="{{ path("membre_acceptInvitation", {'id': m.id})}}" class="btn waves-effect waves-light right">accepter</a></td>
+                             <td width="5"> <a href="{{ path("membre_supprimerInvitation", {'id': m.id})}}" class="btn waves-effect waves-light right">supprimer</a></td>
+                        </tr>
+                     </table>  
+                </div>
+                <hr>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+

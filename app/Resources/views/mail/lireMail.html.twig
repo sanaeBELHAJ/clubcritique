@@ -1,0 +1,87 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+   Message
+{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <nav>
+            <div class="nav-wrapper brown lighten-3">
+               <div class="container">
+                    <div class="col s12">
+                      <a href="/reception" class="breadcrumb">Boite de reception</a>
+                      <a href="{{path('messagerie_lire',{'id': message.id})}}" class="breadcrumb">Message</a>
+                    </div>
+               </div>
+            </div>
+        </nav>
+    <div class="container margin-top">
+        <div class="row">
+            <div class="col s12">
+                <div class="col s7">
+                    {% if id_membre == message.id_sender %}
+                        <p>De : moi</p>
+                        {% for m in membres%}
+                            {% if m.id == message.id_recever %}
+                                <p>A : <b>{{ m.prenom }} {{ m.nom }}</b> <span style="font-size:11px">({{ m.mail }})</span> </p>
+                            {% endif %}
+                        {% endfor %}
+                        {% if message.id_recever not in SenderIds%}
+                            <p><b>A :  <span>Utilisateur</span> <span style="font-size:11px">(Compte supprimé)</span></b> </p>
+                        {% endif %}
+                    {%endif %}
+                    {% if id_membre == message.id_recever %}
+                        {% for m in membres%}
+                            {% if m.id == message.id_sender %}
+                                <p><b>De : <b>{{ m.prenom }} {{ m.nom }}</b> <span style="font-size:11px">({{ m.mail }})</span></b> </p>
+                            {% endif %}
+                        {% endfor %}
+                        {% if message.id_sender not in SenderIds%}
+                            <p><b>De :  <span>Utilisateur</span> <span style="font-size:11px">(Compte supprimé)</span> </b></p>
+                        {% endif %}
+                        <p><b>A  : moi</b></p>
+                    {%endif %}
+                </div>
+                <div class="col s4">
+                    <p> </p>
+                    <p style="font-size:13px" class="grey-text right">{{message.date|date("d/m/Y à H:m")}}</p>
+                </div>
+                <div class="col s1 right">
+                    <p></p>
+                    {% if id_membre == message.id_sender %}
+                        {% if message.id_recever in SenderIds%}
+                            <a href="{{ path("messagerie_send", {'id': message.id_recever})}}" class="skin-text" ><i  class="material-icons">reply</i></a>
+                        {%else%}
+                            <a href="#" class="skin-text" style=" pointer-events: none;cursor: default;color:gray"><i  class="material-icons">reply</i></a>
+                        {%endif %}
+                    {%endif %}
+                    {% if id_membre == message.id_recever %}
+                        {% if message.id_sender in SenderIds%}
+                            <a href="{{ path("messagerie_send", {'id': message.id_sender})}}" class="skin-text" ><i  class="material-icons">reply</i></a>
+                        {%else%}
+                            <a href="#" class="skin-text" style=" pointer-events: none;cursor: default;color:gray"><i  class="material-icons">reply</i></a>
+                        {%endif %}
+                    {%endif %}
+                </div>
+            </div>
+            <div class="col s12"><hr/></div>
+             <div class="col s12">
+                 <fieldset>
+                    <div>
+                       <b>Objet : </b>
+                    </div>
+                    <div>
+                        <p><span>{{message.objet|raw}}<span></p>
+                    </div>
+                    <p><b>Message : </b></p>
+                    <div>{{message.message|raw}}</div>
+                 </fieldset>
+             </div>
+        </div>
+    </div>
+</div>
+</div>
+    <br><br><br><br>
+
+{% endblock %}

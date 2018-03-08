@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Contenu
+{% endblock %}
+
+
+{% block body %}
+    <div class="row margin-top">
+        <div class="col l12 col m12 col s12 col xs12">
+            <div class="container">
+                <h1 class="titleS">Contenue par categorie</h1><br>
+                {% for categorie in categories %}
+                    <div class="col l3 col m6">
+                        <a href="#">
+                            <div class="panel panel-primary teal lighten-2">
+                                <div class="panel-heading">
+                                    <div class="row">
+                                        <div class="col s5">
+                                            {% if categorie.titre=="CD" or categorie.titre=="cds" or categorie.titre=="cd" %}
+                                                <i class="material-icons white-text medium">album</i>
+                                            {% elseif categorie.titre=="cinema" or categorie.titre=="movies" or categorie.titre=="movie" or categorie.titre=="film" %}
+                                                <i class="material-icons white-text medium">movie</i>
+                                            {% elseif categorie.titre=="livre" or categorie.titre=="book" or categorie.titre=="roman" %}
+                                                <i class="material-icons white-text medium">book</i>
+                                            {% elseif categorie.titre=="jeu" %}
+                                                 <i class="material-icons white-text medium">gamepad</i>
+                                            {% else %}
+                                                <i class="material-icons white-text medium">book</i>
+                                            {% endif %}
+                                        </div>
+                                        <div class="col s7">
+                                            {%if nbCategorie is defined%}
+                                                    {%if nbCategorie[categorie.id] is defined%}
+                                                         <div class="huge white-text"> <b>{{nbCategorie[categorie.id]}}</b></div>
+                                                    {%endif%}
+                                            {%endif%}
+                                            <div class="white-text">{{ categorie.titre }}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a href="{{path("article_articlesbycateg",{"id":categorie.id})}}">
+                                    <div class="panel-footer">
+                                        <span class="left brown-text lighten-1">Details</span>
+                                        <span class="right"><i class="material-icons brown-text lighten-1 tiny">arrow
+                                                forward</i></span>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                </a>
+                            </div>
+                        </a>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

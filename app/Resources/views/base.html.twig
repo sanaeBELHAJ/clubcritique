@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>{% block title %}Club des critiques{% endblock %}</title>
+    {% block stylesheets %}
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <link rel="stylesheet" href="{{ asset('css/dataviz.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/materialize.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/jquery.jqplot.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/chat.css') }}">
+        <script src="{{ asset('code/highcharts.js')}}"></script>
+        <script src="{{ asset('code/modules/exporting.js')}}"></script>
+        <script src="{{ asset('code/highcharts-3d.js')}}"></script>
+        <script src="{{ asset('code/modules/funnel.js')}}"></script>
+        <script src="{{ asset('code/modules/exporting.js')}}"></script>
+    {% endblock %}
+    
+    
+    
+    
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}"/>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+</head>
+<body>
+<div>
+    {% if membre is defined and membre != null and membre.statut == 1 %}
+
+        <ul id="dropdown1" class="dropdown-content" style="margin-top: 63px;">
+            <li>
+                <a href="{{ path("membre_admin") }}" id="">
+                    <span class="">Gestion de site</span>
+                </a>
+            </li>
+            <li class="divider"><span class="yellow-text text-darken-2"></span></li>
+            <li>
+                <a href="{{ path("statistiques_statistique") }}">
+                    <span class="">Statistiques</span>
+                </a>
+            </li>
+        </ul>
+        <ul id="dropdown2" class="dropdown-content ">
+            <li>
+                <a href="{{ path("membre_admin") }}" id="">
+                    <span class="">Gestion de site</span>
+                </a>
+            </li>
+
+            <li class="divider"><span class=""></span></li>
+            <li>
+                <a href="{{ path("statistiques_statistique") }}">
+                    <span class="">Statistiques</span>
+                </a>
+            </li>
+        </ul>
+        <div class="col s12">
+            <ul id="dropdown3" class="dropdown-content" style="margin-top: 63px;">
+                <li>
+                    <a href="{{ path("membre_invitationList") }}" id="invitationBadge">
+                        <!-- <span id="invitationBadge" class="new badge" ></span>Invitation-->
+                    </a>
+                </li>
+
+                <li class="divider"><span class=""></span></li>
+                <li>
+                    <a href="">
+                        <span class="new badge">1</span>Salon
+                    </a>
+                </li>
+            </ul>
+        </div>
+    {% endif %}
+    <nav class="teal lighten-4" role="navigation">
+        <div class="nav-wrapper ">
+            <div class="nav-wrapper container">
+                <div class="left">
+                    <a id="logo-container" href="{{path('homepage')}}" class="brand-logo">
+                        <img class="logo" src="{{ asset('images/logo.png') }}">
+                    </a>
+                </div>
+                <div class="left padd-left" style="padding-left:19%">
+                    <a href="{{path('salon_salons')}}" id="">
+                        Salons
+                    </a>
+                </div>
+                <div class="left padd-left">
+                    <a href="{{ path("categorie_categories") }}" id="">
+                        Contenus
+                    </a>
+                </div>
+                {% if membre is defined and id_membre != null %}
+                    <div class="right padd-left">
+                        <a href="{{ path("membre_logout") }}" id="">
+                            <i class="material-icons">power_settings_new </i>
+                        </a>
+                    </div>
+                    <div class="right padd-left">
+                        <a href="{{ path("membre_all") }}" id="">
+                            <i class="material-icons">people </i>
+                        </a>
+                    </div>
+                    <div class="right padd-left">
+                        <ul class="right hide-on-med-and-down">
+                            <li>
+                                <a class="dropdown-button" href="#" data-activates="dropdown3" onclick="SetVu()">
+                                    <i id="notification" class="material-icons"> notifications</i>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="right padd-left">
+                        <a href="{{ path("messagerie_reception") }}" id="">
+                            <i class="material-icons">chat </i>
+                        </a>
+                    </div>
+                {% endif %}
+                <div class="right padd-left">
+                    {% if membre is defined and id_membre != null %}
+                        <a href="{{ path("membre_profil",  {'id': id_membre}) }}" id="">
+                            <i class="material-icons">perm_identity </i>
+                        </a>
+                    {% else %}
+                        <a href="{{ path("membre_login") }}" id="">
+                            <i class="material-icons">perm_identity </i>
+                        </a>
+                    {% endif %}
+                </div>
+                {% if membre is defined and membre != null and membre.statut == 1 %}
+                    <ul class="right hide-on-med-and-down">
+                        <li><a class="dropdown-button" href="#!" data-activates="dropdown1">
+                                    <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Administration<span><i
+                                                    class="material-icons right">arrow_drop_down</i></a></li>
+                    </ul>
+                    <ul id="nav-mobile" class="side-nav">
+                        <li><a class="dropdown-button" href="#!" data-activates="dropdown2">Admin<i
+                                        class="material-icons right">arrow_drop_down</i></a></li>
+                    </ul>
+                    <a href="#" data-activates="nav-mobile" class="button-collapse">
+                        <i class="material-icons">menu</i>
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+
+    </nav>
+</div>
+
+{% block body %}
+    
+{% endblock %}
+<footer class="page-footer teal lighten-4">
+    <div class="container">
+        <div class="row">
+            <div class="col s10 ">
+            </div>
+            <div class="col s4 right">
+                <ul> 
+                    <li><a class=" white-text text-bold" href=""> CGU - Mention légale - A propos de nous</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="footer-copyright">
+        <div class="container">
+            © 2017 Copyright Text
+        </div>
+    </div>
+</footer>
+
+{% block javascripts %}
+
+    <script src="{{ asset('js/jquery-3.1.1.min.js') }}"></script>
+    <script src="{{ asset('js/materialize.min.js') }}"></script>
+    <script src="{{ asset('js/init.js') }}"></script>
+    <script src="{{ asset('js/salons.js') }}"></script>
+    <script src="{{ asset('js/jquery.jqplot.min.js') }}"></script>
+    <script src="{{ asset('js/renderer/jqplot.barRenderer.js') }}"></script>
+    <script src="{{ asset('js/renderer/jqplot.dateAxisRenderer.js') }}"></script>
+    <script src="{{ asset('js/renderer/jqplot.pieRenderer.js') }}"></script>
+    <script src="{{ asset('js/renderer/jqplot.categoryAxisRenderer.js') }}"></script>
+    <script src="{{ asset('js/dataviz.js') }}"></script>
+
+{% endblock %}
+</body>
+</html>

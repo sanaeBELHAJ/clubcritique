@@ -1,0 +1,2 @@
+$idSalon = 9, $idMembre = 1 dans SalonsController
+$idMembre = 1; dans SalonController

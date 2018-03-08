@@ -1,0 +1,144 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+
+    <div class="row ">
+        <div class="row panelAcceuil">
+            <div class="col s8">
+               <div class="myContainer justify concept">
+                    <div id="">
+                        <p>
+                            {{ concept }}
+                        </p>
+                    </div>
+               </div>
+            </div>
+            <div  class="col s4 right">
+                {% if id_membre == null %}
+                    <div class="card">
+                        <div class="card-content">
+                            {% if mailExist !=null %}
+                                <p>{{mailExist}}</p>
+                            {% endif %}
+                            {{ form_start(email) }}
+                                <div class="left-align">
+                                    <p>Inscrivez-vous :</p><br>
+                                    {{ form_rest(email)}}
+                                </div>
+                                <div class="right-align">
+                                    <button class="btn waves-effect waves-light" type="submit">Ok</button>
+                                </div>
+                            {{ form_end(email)}}
+                        </div>
+                    </div>
+                    <div class="card brown lighten-4">
+                                    <div class="card-content center-align">
+                                        <span class="material-icons large teal-text">alarm_on</span>
+                                        <br>
+                                        {% if nextSalon is defined and nextSalon!=null%}
+                                            Prochain salon : <b>{{nextSalon.TitreSalon}}</b>
+                                            <br>
+                                        {% else %}
+                                            <p><center>Aucun salon n'est organisé</center></p>
+                                        {% endif %}
+                                        {% if nextSalon is defined and nextSalon!=null%}
+                                            Le prochain salon aura lieu le <b>{{nextSalon.dateDebut|date("d/m/Y à H:m")}} </b> et il termine le <b>{{ nextSalon.dateFin|date("m/d/Y à H:m")}}</b>
+                                        {% endif %}
+                                         <a href="{{path('salon_salons')}}" class="btn grey lighten-2">Voir les salons en cours </a>
+                                    </div>
+                    </div>
+                {% else %}
+                    <div  class="col s12">
+                                <div class="card brown lighten-4">
+                                    <div class="card-content center-align">
+                                        <span class="material-icons large teal-text">alarm_on</span>
+                                        <br>
+                                        {% if nextSalon is defined and nextSalon!=null%}
+                                            Prochain salon : <b>{{nextSalon.TitreSalon}}</b>
+                                            <br>
+                                        {% else %}
+                                            <p><center>Aucun salon n'est organisé</center></p>
+                                           
+                                        {% endif %}
+                                        {% if nextSalon is defined and nextSalon!=null%}
+                                            Le prochain salon aura lieu le <b>{{nextSalon.dateDebut|date("d/m/Y à H:m")}} </b> et il termine le <b>{{ nextSalon.dateFin|date("m/d/Y à H:m")}}</b>
+                                        {% endif %}
+                                        <a href="{{path('salon_salons')}}" class="btn grey lighten-2">Voir les salons en cours </a>
+                                    </div>
+                            </div>
+                    </div>
+                {% endif %}
+              </div>
+        </div>
+        <div class="col s12 alune">
+            <h4><center>A la une</center></h4>
+        </div>
+        <div class="col s12  grey lighten-5">
+            {% if articles is defined and articles!= null%}
+            <div>
+                {%for article in articles %}
+                    <div class="col s3">
+                        <div class=" card teal lighten-4">
+                            <div class="card-image waves-effect waves-block waves-light">
+                                {% if article.image == null %}
+                                    <img class="activator" height="200px"  src="{{ asset('images/default.png') }}">
+                                {% else %}
+                                    <img class="activator" height="200px" src="../ressource/article/{{ article.image }}">
+                                {% endif %}
+                            </div>
+                            <div class="card-content">
+                                <span class="card-title activator white-text text-darken-4"  style="font-size: 13px">{{ article.titre }}<i class="material-icons right">more_vert</i></span>
+                            </div>
+                            <div class="card-action brown lighten-5">
+                                <a href="{{ path('article_view', {"idA":article.id}) }}" class="brown-text text-darken-4">Voir details</a>
+                            </div>
+                            <div class="card-reveal brown lighten-5">
+                                <span class="card-title grey-text text-darken-4  ">{{ article.titre }}<i class="material-icons right">close</i></span>
+                                <p>{{ article.resume }}</p>
+                            </div>
+                        </div>
+                    </div>
+                {%endfor%}
+            </div>
+            {% endif %}
+        </div>
+        <div class="col s12 alune">
+            <h4>
+                <center>Nous Contactez</center>
+            </h4>
+        </div>      
+        <div class="col s12  grey lighten-5">
+            
+            <div class="row margin-top">
+                <div class="col s3">
+                </div>
+                <div class="col s6">
+                    <fieldset>
+                    {{ form_start(form) }}
+                        <div class="input-field">
+                            <label>Nom :</label>
+                            <input type="text" class="validate" name="nom"> 
+                        </div>
+                        <div class="input-field">
+                            <label>E-mail :</label>
+                            <input type="text" class="validate" name="mail"> 
+                        </div>
+
+                        {{ form_rest(form) }}
+                        <div class="right">
+                            <button class="btn waves-effect waves-light" type="submit" name="action">Envoyer
+                                <i class="material-icons right">send</i>
+                            </button>
+                        </div>
+                    {{ form_end(form) }}
+                    </fieldset>
+                </div>
+                <div class="col s3">
+                </div>          
+            </div>
+        </div>
+    </div>
+    
+{% endblock %}
+

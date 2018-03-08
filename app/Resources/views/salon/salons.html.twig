@@ -1,0 +1,163 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    
+{% endblock %}
+
+
+{% block body %}
+<div class="row margin-top">
+    <div class="container">
+        <ul id="tabs-swipe-demo" class="tabs center-align">
+          <li class="tab col s3 "><a class="active  teal-text text-accent-4" href="#test-swipe-1">Salons en cours</a></li>
+          <li class="tab col s3"><a  class=" teal-text text-accent-4" href="#test-swipe-2">Salons Prochains</a></li>
+          <li class="tab col s3"><a class=" teal-text text-accent-4" href="#test-swipe-3">Salons passés</a></li>
+        </ul>
+        <div id="test-swipe-1" class="col s12">
+            <!-- salon en cours-->
+            {%if salonsEncours is defined and salonsEncours is not null%}
+                {% for salonEncours in salonsEncours %}
+                    <div class="card-panel teal lighten-3">
+                        <div class="col s2">
+                            {%if articles is defined and articles != null %}
+                                {%for article in articles %}
+                                    {% if article.id == salonEncours.idArticle%}
+                                        <img width="80" height="60" src='../ressource/article/{{article.image}}'>
+                                    {%endif%}
+                                {%endfor%}
+                            {%endif%}
+                        </div>
+                        <span class="white-text">
+                            {%if articles is defined and articles != null %}
+                                {%for article in articles %}
+                                    {% if article.id == salonEncours.idArticle%}
+                                        <b>{{article.titre}}</b><br>
+                                    {%endif%}
+                                {%endfor%}
+                            {%endif%}
+                            <b>{{salonEncours.titreSalon}}</b>
+                            <br>De : {{salonEncours.dateDebut|date('d/m/y')}} au {{salonEncours.dateFin|date('d/m/y')}} 
+                        </span>
+                        {%if id_membre is defined and id_membre!=null%}
+                            {%if idParticipant[salonEncours.id] is defined %}
+                                    {% if id_membre in idParticipant[salonEncours.id]%}
+                                        <a href="{{path('salon_chat',{'idSalon':salonEncours.id})}}" class="waves-effect waves-light btn right">Rejoindre</a>
+                                    {%else%}
+                                        <a href="#note" class="waves-effect waves-light btn right">Rejoindre</a>
+                                        <div id="note" class="modal">
+                                                <div class="modal-content">
+                                                    <div class="row center">
+                                                        <p><center><b>Veuillez noter le salon pour acceder!</b></center></p>
+                                                        <div class="rating rating2">
+                                                            <a href="{{path("salon_note",{"id":salonEncours.idArticle})}}?idSalon={{salonEncours.id}}&note=1" title="Give 1 stars">★</a>
+                                                            <a href="{{path("salon_note",{"id":salonEncours.idArticle})}}?idSalon={{salonEncours.id}}&note=2" title="Give 2 stars">★</a>
+                                                            <a href="{{path("salon_note",{"id":salonEncours.idArticle})}}?idSalon={{salonEncours.id}}&note=3" title="Give 3 stars">★</a>
+                                                            <a href="{{path("salon_note",{"id":salonEncours.idArticle})}}?idSalon={{salonEncours.id}}&note=4" title="Give 4 stars">★</a>
+                                                            <a href="{{path("salon_note",{"id":salonEncours.idArticle})}}?idSalon={{salonEncours.id}}&note=5" title="Give 5 stars">★</a>
+                                                       </div>
+                                                    </div>
+                                                </div>
+                                        </div>
+                                    {%endif%}
+                            {%else%}
+                                <a href="#note" class="waves-effect waves-light btn right">Rejoindre</a>
+                                <div id="note" class="modal">
+                                        <div class="modal-content">
+                                            <div class="row center">
+                                                <p><center><b>Veuillez noter le salon pour acceder!</b></center></p>
+                                                <div class="rating rating2">
+                                                    <a href="{{path("salon_note",{"id":salonEncours.idArticle})}}?idSalon={{salonEncours.id}}&note=1" title="Give 1 stars">★</a>
+                                                    <a href="{{path("salon_note",{"id":salonEncours.idArticle})}}?idSalon={{salonEncours.id}}&note=2" title="Give 2 stars">★</a>
+                                                    <a href="{{path("salon_note",{"id":salonEncours.idArticle})}}?idSalon={{salonEncours.id}}&note=3" title="Give 3 stars">★</a>
+                                                    <a href="{{path("salon_note",{"id":salonEncours.idArticle})}}?idSalon={{salonEncours.id}}&note=4" title="Give 4 stars">★</a>
+                                                    <a href="{{path("salon_note",{"id":salonEncours.idArticle})}}?idSalon={{salonEncours.id}}&note=5" title="Give 5 stars">★</a>
+                                               </div>
+                                            </div>
+                                      </div>
+                                </div>
+                            {% endif %}
+                        {% else %}
+                             <a href="{{path('membre_login')}}" class="waves-effect waves-light btn right">Rejoindre</a>
+                        {% endif %}
+                    </div>
+                {%endfor%}
+            {%else%}
+                <div class="card-panel">
+                    Il n'y a pas de salon en cours!
+                </div>
+            {%endif%}
+        </div>
+        <div id="test-swipe-2" class="col s12">
+            {%if salonsProchain is defined and salonsProchain is not null%}
+                {% for salonProchain in salonsProchain %}
+                    <div class="card-panel  brown lighten-2">
+                         <div class="col s2">
+                            {%if articles is defined and articles != null %}
+                                {%for article in articles %}
+                                    {% if article.id == salonProchain.idArticle%}
+                                        <img width="80" height="60" src='../ressource/article/{{article.image}}'>
+                                    {%endif%}
+                                {%endfor%}
+                            {%endif%}
+                        </div>
+                        <span class="white-text">
+                            {%if articles is defined and articles != null %}
+                                {%for article in articles %}
+                                    {% if article.id == salonProchain.idArticle%}
+                                        <b>{{article.titre}}</b><br>
+                                    {%endif%}
+                                {%endfor%}
+                            {%endif%}
+                            <b>{{salonProchain.titreSalon}}</b>
+                            <br>De : {{salonProchain.dateDebut|date('d/m/y')}} au {{salonProchain.dateFin|date('d/m/y')}} 
+                        </span>
+                    </div>
+                {%endfor%}
+            {%else%}
+                <div class="card-panel">
+                    Il n'y a pas de prochain salon!
+                </div>
+            {%endif%}
+        </div>
+        <div id="test-swipe-3" class="col s12">
+            {%if salonsPasse is defined%}
+                {%if salonsPasse is not null%}
+                    {% for salonPasse in salonsPasse %}
+                        <div class="card-panel grey darken-1">
+                            <div class="col s2">
+                                {%if articles is defined and articles != null %}
+                                    {%for article in articles %}
+                                        {% if article.id == salonPasse.idArticle%}
+                                            <img width="80" height="60" src='../ressource/article/{{article.image}}'>
+                                        {%endif%}
+                                    {%endfor%}
+                                {%endif%}
+                            </div>
+                            <span class="white-text">
+                                {%if articles is defined and articles != null %}
+                                    {%for article in articles %}
+                                        {% if article.id == salonPasse.idArticle%}
+                                            <b>{{article.titre}}</b><br>
+                                        {%endif%}
+                                    {%endfor%}
+                                {%endif%}
+                                <b>{{salonPasse.titreSalon}}</b>
+                                <br>De : {{salonPasse.dateDebut|date('d/m/y')}} au {{salonPasse.dateFin|date('d/m/y')}} 
+                            </span>
+                        </div>
+                    {%endfor%}
+                {%else%}
+                    <div class="card-panel">
+                        Il n'y a pas de prochain passé!
+                    </div>
+                {%endif%}
+            {%endif%}
+        </div>
+    </div>
+</div>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+{% endblock %}

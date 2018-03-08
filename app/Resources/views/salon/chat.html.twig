@@ -1,0 +1,152 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Chat
+{% endblock %}
+
+
+{% block body %}
+    <div class="row salonchat">
+        <div class="menu">
+            <div class="row">
+                {%if article is defined and article is not null %}
+                    <a href="#infoArticlez" class="back">
+                        <i class="fa fa-angle-left"></i>
+                        <img src="../ressource/article/{{article.image}}" draggable="false"/>
+                        <div class="members right">{{article.titre}}</div>
+                    </a>
+                    {% if salon is defined %}
+                        <div class="name center">{{salon.titreSalon}}</div>
+                    {%endif%}
+                    <div id="infoArticlez" class="modal">
+                        <div class="modal-content">
+                            <div class="row">
+                                <div class="col s6">
+                                     <img width="300" height="200" src='../ressource/article/{{article.image}}'>
+                                </div>
+                                <div class="col s6">
+                                    {%if article.titre != null %}
+                                        <p>Titre : {{article.titre}}</p>
+                                    {%endif%}
+                                    {%if article.resume != null %}
+                                        <p>Description : {{article.resume}}</p>
+                                    {%endif%}
+                                    {%if article.date_sortie != null %}
+                                        <p>Date de sortie : {{article.date_sortie|date("d/m/Y")}}</p>
+                                    {%endif%}
+                                    {%if article.auteur != null %}
+                                        <p>Auteur/Réalisateur :{{article.auteur}}</p>
+                                    {%endif%}
+                                 </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+        <div class="row">
+    <div class="col s8" id="chatpanel" style="overflow:scroll; height:400px;">
+    <ol class="chat" id="chatMessages">
+        {%if messages is defined and messages is not null%}
+            {%for message in messages%}
+                <li class="other">
+                  <div class="msg">
+                   {%if membres is defined and membres is not null%}
+                        {%for membre in membres %}
+                            {% if membre.id== message.idMembre%}
+                            <div class="user">
+                                {{membre.prenom}} {{membre.nom}}
+                                {%if membre.statut == 1 %}
+                                <span class="range admin">Admin</span></div>
+                                {%endif%}
+                            {%endif%}
+                        {%endfor%}
+                    {%endif%}
+                    <p>{{message.msg}}</p>
+                    <time>{{ message.date|date('H:m - d/m/Y')}}</time>
+                  </div>
+                </li>
+            {%endfor%}
+        {%endif%}
+    </ol>
+    </div>
+    <div class=" col s4 participant right white-text" style="overflow:scroll; height:400px;">
+        <h6><center>Listes des participants</center></h6>
+        <hr>
+        <a href="#MesAmis" class="right brown-text text-lighten-4">Ajouter des amis<i class="material-icons white-text">add</i></a>
+        <div id="MesAmis" class="modal">
+                            <div class="modal-content">
+                                <div class="row">
+                                    <div class="col s12 black-text">
+                                         {%if mesamis is defined and  mesamis is not null%}
+                                             {%for mesami in mesamis%}
+                                                 <ul class="collection">
+                                                 {%for membre in globalMembres %}
+                                                    {% if membre.id == mesami%}
+                                                            <li class="collection-item avatar">
+                                                              <img src="../ressource/profil/{{membre.picture}}" alt="" class="circle">
+                                                              <span class="title">{{membre.prenom}} {{membre.nom}}</span>
+                                                              <a href="{{path('invite_salon', {'idSalon':idSalon ,'id':membre.id}) }}" class="right btn">Inviter</a>
+                                                            </li> 
+                                                    {%endif%}
+                                                {%endfor%}
+                                             {%endfor%}
+                                          {%endif%}
+                                    </div>
+                            </div>
+                </div>
+            </div>
+        {%if membres is defined and membres is not null%}
+            {%for membre in membres %}
+                <div class="row">
+                    <div class="col s8">
+                        <p>{{membre.prenom}} {{membre.nom}} </p>
+                    </div>
+                    <div class="col s4" style="margin-top: 10px">
+                        <a href="{{path('user_note')}}?id_membre_noter={{membre.id}}&idSalon={{idSalon}}"><i class="material-icons white-text">favorite</i></a>
+                        <a href="{{path('user_ban')}}?id_membre_banni={{membre.id}}&idSalon={{idSalon}}"><i class="material-icons red-text">sentiment_very_dissatisfied</i></a>
+                        {%if monstatut is defined%}
+                            {%if monstatut==1 %}
+                                {%if moderateurs is defined %}
+                                    {%if membre.id in moderateurs%}
+                                        <a href="{{path('add_moderateur')}}?id_membre_moderateur={{membre.id}}&idSalon={{idSalon}}"><i class="material-icons red-text text-lighten-4 ">business_center</i></a>
+                                    {%else%}
+                                        <a href="{{path('add_moderateur')}}?id_membre_moderateur={{membre.id}}&idSalon={{idSalon}}"><i class="material-icons teal-text ">business_center</i></a>
+                                    {%endif%}
+                                {%endif%}
+                            {%else%}
+                                   {%if membre.id in moderateurs%}
+                                        <a href="#"><i class="material-icons red-text text-lighten-4 ">business_center</i></a>
+                                    {%endif%}
+                            {%endif%}
+                        {%endif%}
+                    </div>
+                </div>
+            {%endfor%}
+        {%endif%}
+    </div>
+    <div class="col s12 typezone">
+        <form action="/sendMessage/{{idSalon}}" method="POST">
+            <div class="row" style="padding:0px">
+            <div class="col s8" style="padding:0px">
+                <div class="col s11" style="padding:0px">
+                    <input type="hidden" name="idSalon" id="idSalon" value="{{idSalon}}">
+                    <textarea type="text" placeholder="Dit quelque chose" name="msg"></textarea>
+                </div>
+                <div class="col s1" style="padding:0px">
+                <input type="submit" class="send right" value="" onclick="sendMessage({{idSalon}})"/>
+            </div>
+            </div>
+            <div class="col s4">
+            </div>
+           
+            </div>
+        </form>
+    </div>
+   </div>
+</div>
+<script  type="text/javascript">
+    element = document.getElementById('chatpanel');
+    element.scrollTop = element.scrollHeight;
+</script>
+{% endblock %}
