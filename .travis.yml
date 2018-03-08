@@ -5,10 +5,6 @@ php:
 before_script:
  - composer require --dev friendsofphp/php-cs-fixer
  - composer require --dev sensiolabs/security-checker
- 
 
 notifications:
-    slack:
-      esgienv:P41xWxouoCKCqrJVOsVtfCNR
-	email:
-      - sanai-son112@hotmail.fr
+    slack: esgienv:P41xWxouoCKCqrJVOsVtfCNR
