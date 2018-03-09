@@ -1,14 +1,18 @@
 language: php
 php:
-    - 7.1.9
- 
+- 7.1.9
 before_script:
-    - composer require --dev friendsofphp/php-cs-fixer
-    - composer require --dev sensiolabs/security-checker
-    
+- composer require --dev friendsofphp/php-cs-fixer
+- composer require --dev sensiolabs/security-checker
 script:
-    - php index.php
-    
+- php index.php
 notifications:
-    slack: esgienv:P41xWxouoCKCqrJVOsVtfCNR
-    email: sanai-son112@hotmail.fr
+  slack: esgienv:P41xWxouoCKCqrJVOsVtfCNR
+  email: sanai-son112@hotmail.fr
+deploy:
+  provider: heroku
+  api_key:
+    secure: guzmYjAsNcDGDzThsgxyIM8QLzyY8813A8rMpXU2m//6PTvwPp6JpVqh83BlFLmJuOmeits0SsIRu6JKUt2q4pbwAbqE7Dp3PpLWOkiYh74GNpsgnEb9TADbQ3/3Z5B9Sp40faHhJB9gmzXmilEajhfyRPDTM/iCJZzHAcvPbZj1WQs0xT2v/oXOfwtXiRSDc9Nu5p962TyIfIIe8+aHppzLQ7KBCzHYAzP/NYw7DTtdpdrC1BzAYj9UQawCROk/UdekkopDd3dX80+4CKOUHeg8222Oni6hgoac9+btgqVi7X8w1xvfpP/uktE+w2FH78HXswaIr+9/jshLjFXStN5WxMzkMKc/QhnRebrS4/7olXwUdbPEGWG4rJpxwj4kMTs41NQVMToNEFCiFB8jKLMxFz5yb3XrJZMJAjIn3GGKogXlTF/Z3z2GIZ9vcJ/Nik/QIJgpfJNJzL1P3OShaiKLFYGcFS7PLBJgVn7AbOSp9ARKDlQTT4YpEO2w96O54tlmi/SUKXbM36cBoyQaou7OMF3UL77Rix96TC9DeLItF4gtaX7ewhLOMxqOCn2FjGcsnuY17woq/mK26aY9M6N5bCf1qiEzh8yzzuVfzGpKIBNTWSvG5ITtiTIMVDYr9PUZLwwNhmHLihK2piqK9iZxNhzGg4KJsOKi9I53Dbw=
+  app: clubcritique
+  on:
+    repo: sanaeBELHAJ/clubcritique
