@@ -1,7 +1,8 @@
 | Q             | A
 | ------------- | ---
-| Branch?       | master 
+| Branch?       | master / sanae
 | Bug fix?      | yes/no
+| New pages php | yes/no
 | New feature?  | yes/no <!-- don't forget to update src/**/CHANGELOG.md files -->
 
 <!--
