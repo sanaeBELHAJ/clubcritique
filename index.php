@@ -10,7 +10,7 @@ echo "add PR<br>";
 $a = 1;
 $b = 2; 
 echo $a + $b;
-echo "<img src='https://vignette.wikia.nocookie.net/vsbattles/images/3/32/SanaeSoku.png/revision/latest?cb=20171104045707'>";
+echo "<img alt='sanae' src='https://vignette.wikia.nocookie.net/vsbattles/images/3/32/SanaeSoku.png/revision/latest?cb=20171104045707'>";
 //$b = TRUE;
 //$a = FALSE;
 
