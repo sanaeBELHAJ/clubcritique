@@ -7,6 +7,8 @@ before_script:
 script:
 - php index.php
 notifications:
+  on_success: never
+  on_failure: always
   slack: esgienv:P41xWxouoCKCqrJVOsVtfCNR
   email: sanai-son112@hotmail.fr
 #deploy:
