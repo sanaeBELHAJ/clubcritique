@@ -13,7 +13,7 @@ echo $a + $b;
 echo "<img src='https://vignette.wikia.nocookie.net/vsbattles/images/3/32/SanaeSoku.png/revision/latest?cb=20171104045707'>";
 $b
 ihkjhjk
-
+ghgh
 
 ?>
 </body>
